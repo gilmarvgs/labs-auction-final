@@ -45,3 +45,37 @@ Observações
 - Se preferir usar SSH para o remote, configure o remote para `git@github.com:gilmarvgs/labs-auction-final.git` antes do push.
 
 Se quiser, eu posso também criar um `README` mais detalhado ou um arquivo `CONTRIBUTING.md`.
+
+Executando com Docker / Docker Compose
+
+- O projeto inclui um `Dockerfile` e um `docker-compose.yml` para subir a aplicação e um MongoDB de desenvolvimento.
+- O `docker-compose.yml` usa `cmd/auction/.env` como `env_file`. Verifique esse arquivo para variáveis como `AUCTION_INTERVAL`.
+
+Comandos úteis (PowerShell):
+
+1) Subir em foreground (build + run):
+```powershell
+docker-compose up --build
+```
+
+2) Subir em background (detached):
+```powershell
+docker-compose up --build -d
+```
+
+3) Parar e remover containers:
+```powershell
+docker-compose down
+```
+
+4) Rodar os testes dentro do container `app` (imagem construída pelo compose):
+```powershell
+docker-compose run --rm app go test ./...
+```
+
+5) Rodar apenas o teste do fechamento do leilão dentro do container:
+```powershell
+docker-compose run --rm app go test ./internal/infra/database/auction -run TestCreateAuction_automaticallyClosesAfterInterval -v
+```
+
+Se preferir que eu commite essas alterações e envie para o remote, eu posso fazê-lo agora.
